@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Read</title>
+</head>
+<H1>Modifier un livre</H1>
+<body>
+
 <?php
 
 $servername = "localhost:3306";
@@ -11,7 +23,7 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully"; ?>  <br> <br> <?php
+?>  <?php
 
 if(isset($_POST['save']))
 {
@@ -25,7 +37,7 @@ if(isset($_POST['save']))
 
     if($rs)
     {
-        echo "  Livre modifié";
+        echo " <span id='red'> Livre modifié</span>";
     }
 }
 
@@ -40,11 +52,10 @@ if(isset($_GET['id']))
 }
 else die("Aucun livre correspondant");?>
 
-<h1>Modifier un livre </h1>
 <form method="post"> 
     <label id="first"> Titre du livre</label>
     <input type="text" name="title" value="<?php echo $book["title"];?>">
-    <br><br>
+    <br><br><br>
     <label for="list"> Nom de l'auteur</label>
         <select name="author_id"> 
 
@@ -62,8 +73,13 @@ else die("Aucun livre correspondant");?>
     <label id="first">Date de parution</label>
     <input type="text" name="date" value="<?php echo $book["date"];?>">
     <br> <br>
-    <button type="submit" name="save">Enregistrer</button>
+    <button><a href="read.php">Retour liste</a></button>
+    <button type="submit" name="save">Enregistrer la modification</button>
+
     </form>
 
+
+    </body>
+</html>
 
 
