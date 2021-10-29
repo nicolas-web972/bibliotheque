@@ -11,7 +11,6 @@
 <body>
   
 <?php
-
 $servername = "localhost:3306";
 $username = "root";
 $password = "";
@@ -37,6 +36,5 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 ?>
-
 </body>
 </html>

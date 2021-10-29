@@ -23,8 +23,9 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-?>  <?php
+?>  
 
+<?php
 if(isset($_POST['save']))
 {
     $title = $_POST['title'];
@@ -33,11 +34,10 @@ if(isset($_POST['save']))
     $update = "UPDATE `book` set `title`='". mysqli_real_escape_string($conn, $title) . "', `date`= $date, `author_id`=$author_id WHERE id = ".$_GET['id'];
     var_dump($update);
     $rs = mysqli_query($conn, $update);
-  
 
     if($rs)
     {
-        echo " <span id='red'> Livre modifié</span>";
+    echo " <span id='red'> Livre modifié</span>";
     }
 }
 
@@ -75,11 +75,6 @@ else die("Aucun livre correspondant");?>
     <br> <br>
     <button><a href="read.php">Retour liste</a></button>
     <button type="submit" name="save">Enregistrer la modification</button>
-
     </form>
-
-
     </body>
 </html>
-
-

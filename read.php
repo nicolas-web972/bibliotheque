@@ -54,8 +54,8 @@ $deleted_icon ='<svg class="svg-icon" viewBox="0 0 20 20">
 </svg>';
 
 $url ='http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-if (strpos($url, 'deleted=1')!==false){
-    echo "<span id='red'>Livre supprimé !</span><br>"; 
+if (strpos($url, 'deleted=1')!==false) {
+  echo "<span id='red'>Livre supprimé !</span><br>"; 
 }?> <br> <?php 
 
 
@@ -76,7 +76,6 @@ if (isset($_GET['search'])) {
   $conditions = [];
   foreach($parts as $part) {
     $conditions[] = "title LIKE '%" . mysqli_real_escape_string($conn, $part) . "%'";
-    
   }
 
   $sql .= " (" . implode(" OR ", $conditions) . ")";
@@ -92,26 +91,25 @@ if (isset($_GET['date'])) {
 
 $result = $conn->query($sql);
 
-
 if ($result->num_rows > 0) {
   echo "<table id='customers'><tr><th> ID</th><th> Titre</th><th> Auteur</th><th> Date de parution</th><th colspan=2> Modifier / Supprimer</th></tr>";
+  
   // output data of each row
   while($row = $result->fetch_assoc()) {
     echo "<tr><td>" . $row["id"]. "</td><td>" . $row["title"]. "</td><td>" . $row["firstname"] ." ". $row["lastname"]. " </td><td>" . $row["date"]. "</td><td><a href= 'update.php?id=".$row["id"]."'<button id=edit> $edit </button></a></td><td>" . " ". "<a href= 'delete.php?id=".$row["id"]."'<button id=edit> $deleted_icon</button> </a></td></td>";
   }
+
   echo "</table>";
 } else {
   echo "0 results";
 }
-$conn->close();
 
+$conn->close();
 
 ?>
 <br>
 <button><a href="read.php">Retour</a></button>
 <button><a href="create.php">Créer un livre</a></button>
-
-
 </body>
 </html>
 

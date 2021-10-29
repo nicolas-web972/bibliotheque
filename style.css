@@ -1,20 +1,20 @@
 table, th, td {
-    border: 1px solid black;
+  border: 1px solid black;
   }
 h1, p, body {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1{
-    margin-left: -1em;
+  margin-left: -1em;
 }
-  table {
-    width: 100%;
+table {
+  width: 100%;
   }
-  #customers {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse:collapse;
-    width: 70%;
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse:collapse;
+  width: 70%;
   }
 
 #text {
@@ -84,15 +84,17 @@ input {
     height: 1.5em;
   }
   
-  .svg-icon path,
-  .svg-icon polygon,
-  .svg-icon rect {
-    fill: #8ea39f;
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #8ea39f;
   }
   
-  .svg-icon circle {
-    stroke: #8ea39f;
-    stroke-width: 1;
+.svg-icon circle {
+  stroke: #8ea39f;
+  stroke-width: 1;
   }
 
-#red {color:red}
+#red {
+  color:red
+}

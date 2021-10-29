@@ -10,9 +10,7 @@
 <H1>Enregistrer un nouveau livre</H1>
 <body>
   
-
 <?php
-
 $servername = "localhost:3306";
 $username = "root";
 $password = "";
@@ -25,23 +23,20 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-
 if(isset($_POST['save']) AND !empty($_POST['title'])) {
        
         $title = $_POST['title'];
         $author_id = $_POST['author_id'];
         $date = $_POST['date'];
         $sql = "INSERT INTO `book` (`title`, `date`, `author_id`) VALUES ('$title', '$date', '$author_id')";
-
         $rs = mysqli_query($conn, $sql);
-      
 
         if($rs)
         {
             echo "  <span id='red'>Livre enregistré</span><br>";
         }
-} else {
-    echo "<span id='red'>Remplir les champs vides<br></span>";
+        } else {
+        echo "<span id='red'>Remplir les champs vides<br></span>";
 }
     ?>
 <br>
@@ -49,10 +44,9 @@ if(isset($_POST['save']) AND !empty($_POST['title'])) {
     <label id="first"> Titre du livre</label><br/>
     <input type="text" name="title"><br/>
     <br>
-    <label for="list">Nom de l'auteur</label>            <br>
+    <label for="list">Nom de l'auteur</label><br>
 
         <select id=liste name="author_id">  
-
         <?php $sql = "SELECT id, firstname, lastname
         FROM author";
         $result = $conn->query($sql);
@@ -69,10 +63,8 @@ if(isset($_POST['save']) AND !empty($_POST['title'])) {
     <br>
     <button><a href="read.php">Liste des livres</a></button>
     <button type="submit" name="save">Créer</button>
-
     </form>
     <br>
-
 </body>
 </html>
 
