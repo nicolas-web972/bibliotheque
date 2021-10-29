@@ -1,5 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Read</title>
+</head>
+<H1>Enregistrer un nouveau livre</H1>
+<body>
+  
 <?php
-
 $servername = "localhost:3306";
 $username = "root";
 $password = "";
@@ -11,33 +22,31 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
 
-
-if(isset($_POST['save'])){
+if(isset($_POST['save']) AND !empty($_POST['title'])) {
        
         $title = $_POST['title'];
         $author_id = $_POST['author_id'];
         $date = $_POST['date'];
         $sql = "INSERT INTO `book` (`title`, `date`, `author_id`) VALUES ('$title', '$date', '$author_id')";
-
         $rs = mysqli_query($conn, $sql);
-      
 
         if($rs)
         {
-            echo "  Livre enregistré";
+            echo "  <span id='red'>Livre enregistré</span><br>";
         }
+        } else {
+        echo "<span id='red'>Remplir les champs vides<br></span>";
 }
     ?>
 <br>
     <form method="post"> 
     <label id="first"> Titre du livre</label><br/>
     <input type="text" name="title"><br/>
+    <br>
+    <label for="list">Nom de l'auteur</label><br>
 
-    <label for="list">Nom de l'auteur</label>
-        <select name="author_id"> 
-
+        <select id=liste name="author_id">  
         <?php $sql = "SELECT id, firstname, lastname
         FROM author";
         $result = $conn->query($sql);
@@ -48,11 +57,15 @@ if(isset($_POST['save'])){
             <?php }
         } ?> 
         </select>
-        <br>
+        <br> <br>
     <label id="first">Date de parution</label><br/>
     <input type="text" name="date"><br/>
-    
-    <button type="submit" name="save">Enregistrer</button>
+    <br>
+    <button><a href="read.php">Liste des livres</a></button>
+    <button type="submit" name="save">Créer</button>
     </form>
+    <br>
+</body>
+</html>
 
         
