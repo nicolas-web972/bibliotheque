@@ -44,7 +44,7 @@ button a{
     color: black !important; 
 }
 
-button  {
+button {
     background-color: #04AA6D; /* Green */
     border: none;
     color: white;
@@ -56,6 +56,11 @@ button  {
     margin-top: 10px;
     border-radius: 5px;
 
+  }
+
+button #second {
+
+opacity: .5;
   }
 
 #liste {

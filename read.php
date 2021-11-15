@@ -7,9 +7,30 @@
   <link rel="stylesheet" href="style.css">
   <title>Read</title>
 </head>
+<?php
+session_start();
+if (isset($_SESSION['name'])):?>
+  Hello, <?= $_SESSION['name'] ?>!
+  <a href="logout.php">Deconnexion</a>
+  <?php else:?>
+    <a href="login.php">Connexion</a>
+    <?php endif;?>
+    <a href="cart.php">Mon panier</a>
+
+<?php
+if (isset($_POST['book.title'])) {
+  $book_title = $_POST['book.title'];
+  $_SESSION['cart'][$book_title] += 1;
+  header("location:read.php");
+    }
+
+  if (isset($_SESSION['cart'])) {
+  var_dump($_SESSION);
+  }?>
+
 <H1>Bibliothèque des meilleurs livres</H1>
 <form method="GET">
-<input id="search" type="text" name="search" placeholder="Titre">
+<input id="search" type="text" name="search" placeholder="Titre du livre">
 <?php
 
 $servername = "localhost:3306";
@@ -18,12 +39,13 @@ $password = "";
 $database = "bibliotheque";
 
 // Create connection
+
+
 $conn = new mysqli($servername, $username, $password, $database);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
-}
-?> 
+}?>
   <label for="list">parût à partir de</label>            
 
           <select id=date name="date">
@@ -52,6 +74,8 @@ $edit = '<svg class= "svg-icon" viewBox="0 0 20 20">
 $deleted_icon ='<svg class="svg-icon" viewBox="0 0 20 20">
 <path d="M17.114,3.923h-4.589V2.427c0-0.252-0.207-0.459-0.46-0.459H7.935c-0.252,0-0.459,0.207-0.459,0.459v1.496h-4.59c-0.252,0-0.459,0.205-0.459,0.459c0,0.252,0.207,0.459,0.459,0.459h1.51v12.732c0,0.252,0.207,0.459,0.459,0.459h10.29c0.254,0,0.459-0.207,0.459-0.459V4.841h1.511c0.252,0,0.459-0.207,0.459-0.459C17.573,4.127,17.366,3.923,17.114,3.923M8.394,2.886h3.214v0.918H8.394V2.886z M14.686,17.114H5.314V4.841h9.372V17.114z M12.525,7.306v7.344c0,0.252-0.207,0.459-0.46,0.459s-0.458-0.207-0.458-0.459V7.306c0-0.254,0.205-0.459,0.458-0.459S12.525,7.051,12.525,7.306M8.394,7.306v7.344c0,0.252-0.207,0.459-0.459,0.459s-0.459-0.207-0.459-0.459V7.306c0-0.254,0.207-0.459,0.459-0.459S8.394,7.051,8.394,7.306"></path>
 </svg>';
+
+$cart= '<img src="https://img.icons8.com/external-icongeek26-flat-icongeek26/64/000000/external-cart-essentials-icongeek26-flat-icongeek26.png"/>';
 
 $url ='http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 if (strpos($url, 'deleted=1')!==false) {
@@ -92,24 +116,43 @@ if (isset($_GET['date'])) {
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-  echo "<table id='customers'><tr><th> ID</th><th> Titre</th><th> Auteur</th><th> Date de parution</th><th colspan=2> Modifier / Supprimer</th></tr>";
+  echo "<table id='customers'><tr>
+    <th> ID</th><th> Titre</th>
+    <th> Auteur</th><th> Date de parution</th>
+    <th colspan=2> Modifier / Supprimer</th>
+    <th> Ajouter au panier</th></tr>";
   
   // output data of each row
-  while($row = $result->fetch_assoc()) {
-    echo "<tr><td>" . $row["id"]. "</td><td>" . $row["title"]. "</td><td>" . $row["firstname"] ." ". $row["lastname"]. " </td><td>" . $row["date"]. "</td><td><a href= 'update.php?id=".$row["id"]."'<button id=edit> $edit </button></a></td><td>" . " ". "<a href= 'delete.php?id=".$row["id"]."'<button id=edit> $deleted_icon</button> </a></td></td>";
-  }
-
-  echo "</table>";
-} else {
-  echo "0 results";
-}
-
+  while ($row = $result->fetch_assoc()) { ?>
+    <tr>
+        <td><?php echo $row["id"]; ?></td>
+        <td><?php echo $row["title"]; ?></td>
+        <td><?php echo $row["firstname"] . " " . $row["lastname"]; ?></td>
+        <td><?php echo $row["date"]; ?></td>
+        <td><a href='update.php?id=<?php echo $row["id"]; ?>'><button id=edit> éditer </button></a></td>
+        <td><a href='delete.php?id=<?php echo $row["id"]; ?>'><button id=edit> supprimer</button></a></td>
+        <td>
+        <?php 
+                if (!empty($_POST['cart'])) {
+                    if (empty($_SESSION['name'])) {
+                        header("Location: login.php");
+                        die();
+                    }
+                }?>
+                <form method="POST" action="cart.php?action=add&id=<?php echo $row["id"];?>">
+                    <input type="submit" value="Add to cart" name="cart">
+                </form>
+        </td>
+    </tr>
+<?php } ?>
+</table> 
+<?php }
 $conn->close();
 
 ?>
 <br>
-<button><a href="read.php">Retour</a></button>
-<button><a href="create.php">Créer un livre</a></button>
+<button id=second><a href="read.php">Retour</a></button>
+<button id=first><a href="create.php">Créer un livre</a></button>
 </body>
 </html>
 

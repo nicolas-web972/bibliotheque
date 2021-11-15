@@ -16,6 +16,11 @@ $username = "root";
 $password = "";
 $database = "bibliotheque";
 
+session_start();
+session_destroy();
+
+header("Location: read.php");
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 // Check connection
@@ -25,7 +30,7 @@ if ($conn->connect_error) {
 
 if(isset($_POST['save']) AND !empty($_POST['title'])) {
        
-        $title = $_POST['title'];
+        $title = mysqli_real_escape_string($conn, $_POST['title']);
         $author_id = $_POST['author_id'];
         $date = $_POST['date'];
         $sql = "INSERT INTO `book` (`title`, `date`, `author_id`) VALUES ('$title', '$date', '$author_id')";

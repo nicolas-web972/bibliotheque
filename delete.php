@@ -11,10 +11,16 @@
 <body>
   
 <?php
+  
 $servername = "localhost:3306";
 $username = "root";
 $password = "";
 $database = "bibliotheque";
+
+  session_start();
+  session_destroy();
+
+  header("Location: read.php");
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
